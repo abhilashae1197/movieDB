@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title> </title>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="d-flex mb-4 ml-4 mt-2 justify-content-between">
+   <h1> MOVIES </h1>
+<div class="mr-5 d-flex">
+    <a class="btn btn-primary p-2 mr-3" href="/movie/MovieAdd">Add New Movie</a>
+    <a class="btn btn-warning p-2 " href="/movie/MovieAdd">Fetch from imdb</a>
+</div>
+</div>
+
+<ol>
+    <table class="table table-striped">
+   <tr>
+       <th>Title</th>
+       <th>Thumbnail</th>
+       <th>Year</th>
+       <th>Genre</th>
+       <th>Runtime</th>
+       <th>Director</th>
+       <th>Cast</th>
+       <th>Producer</th>
+       <th>Imdb ratings</th>
+
+
+
+   </tr>
+   {% for movie in movies %}
+       <tr>
+           <td><a href="{{ movie.imdb_url }}" target="_blank">{{movie.name}}</a></td>
+           <td><img style="width:100px" src=" {{movie.thumbnail_url}}"/></td>
+            <td>{{movie.year}}</td>
+           <td>
+               {{movie.genre}}
+           </td>
+           <td>{{movie.runtime}}</td>
+           <td>
+               {{movie.director}}
+           </td>
+           <td>
+               {{movie.cast}}
+           </td>
+           <td>{{movie.producer}}</td>
+           <td>{{movie.imdb_rating}}</td>
+
+       </tr>
+   {% endfor %}
+</table>
+
+</ol>
+</body>
+</html>
