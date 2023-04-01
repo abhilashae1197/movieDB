@@ -11,10 +11,19 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
+import io
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# [START gaestd_py_django_secret_config]
+env = environ.Env(DEBUG=(bool, False))
+env_file = os.path.join(BASE_DIR, ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -37,6 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'django_filters',
+    'jquery',
+    'movies',
 ]
 
 MIDDLEWARE = [
@@ -75,12 +88,27 @@ WSGI_APPLICATION = 'movieDB.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'movie_info',
+        'HOST' : '127.0.0.1',
+        # 'HOST' :  '/cloudsql/moviedb-382110:us-east1:movie-db-sql',
+        'PORT' : '5432',
+        'USER' : 'abhilasha',
+        'PASSWORD':'Abhilasha',
     }
 }
 
 
+# placeholder = (
+#         f"SECRET_KEY=eMXGUeDrXkYDhyIZSTFEqVBDFfgTRgPUOGOhDhfMCjuiVSBWDK\n"
+#         f"DATABASE_URL=postgres://abhilasha:Abhilasha@//cloudsql/moviedb-382110:us-east1:movie-db-sql/movie_info"
+#     )
+# env.read_env(io.StringIO(placeholder))
+#
+# DATABASES = {"default": env.db()}
+# if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
+#     DATABASES["default"]["HOST"] = "127.0.0.1"
+#     DATABASES["default"]["PORT"] = 5432
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -116,6 +144,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
