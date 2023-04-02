@@ -1,3 +1,5 @@
+
+{% load static %}
 <html>
 <head>
     <title> </title>
@@ -13,14 +15,30 @@
 <div class="d-flex mb-4 ml-4 mt-2 justify-content-between">
    <h1> MOVIES </h1>
 <div class="mr-5 d-flex">
-    <a class="btn btn-primary p-2 mr-3" href="/movie/MovieAdd">Add New Movie</a>
-    <a class="btn btn-warning p-2 " href="/movie/MovieAdd">Fetch from imdb</a>
+    <a class="btn btn-primary p-2 mr-3" href="/movie/add-movie">Add New Movie</a>
+    <a class="btn btn-warning p-2 " href="/movie/fetch-movie">Fetch from imdb</a>
 </div>
 </div>
 
 <ol>
+    <div class="mb-2">
+        <div class="d-flex justify-content-end mx-5">
+            <select id="type" class="form-select" aria-label=".form-select-lg" name="lang_txt">
+                 <option value="name" >Movie Name</option>
+                <option value="director" >Director</option>
+                <option value="genre">Genre</option>
+                <option value="cast" >Cast Name</option>
+
+            </select>
+            <input id="type_val" type="text" name="value" class="ml-2" placeholder="Type here..">
+            <button id="search-btn" class="btn btn-secondary p-2 ml-2" >Search</button>
+            <script src="{% static 'script.js' %}"></script>
+        </div>
+
+    </div>
     <table class="table table-striped">
    <tr>
+       <th>Id</th>
        <th>Title</th>
        <th>Thumbnail</th>
        <th>Year</th>
@@ -36,6 +54,7 @@
    </tr>
    {% for movie in movies %}
        <tr>
+           <td>{{movie.id}}</td>
            <td><a href="{{ movie.imdb_url }}" target="_blank">{{movie.name}}</a></td>
            <td><img style="width:100px" src=" {{movie.thumbnail_url}}"/></td>
             <td>{{movie.year}}</td>
